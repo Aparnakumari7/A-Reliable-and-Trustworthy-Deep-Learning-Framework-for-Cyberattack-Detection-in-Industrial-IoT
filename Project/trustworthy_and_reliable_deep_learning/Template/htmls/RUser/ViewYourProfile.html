@@ -1,0 +1,123 @@
+{% extends 'RUser/design.html' %}
+{% block userblock %}
+<style>
+    .profile-container {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .profile-title {
+        font-family: 'Share Tech Mono', monospace;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite;
+    }
+
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .profile-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 255, 140, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .profile-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 140, 0.1);
+        border-color: var(--primary-color);
+    }
+
+    .profile-label {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        font-family: 'Share Tech Mono', monospace;
+    }
+
+    .profile-value {
+        color: var(--text-color);
+        font-size: 1.1rem;
+        word-break: break-all;
+    }
+
+    .profile-divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+        margin: 2rem 0;
+        opacity: 0.3;
+    }
+
+    @media (max-width: 768px) {
+        .profile-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .profile-item {
+            padding: 1rem;
+        }
+    }
+
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+        50% { text-shadow: 0 0 20px rgba(0, 255, 140, 0.7); }
+        100% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <h2 class="profile-title">Profile Information</h2>
+    </div>
+
+    <div class="profile-grid">
+        <div class="profile-item">
+            <div class="profile-label">Username</div>
+            <div class="profile-value">{{object.username}}</div>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-label">Email</div>
+            <div class="profile-value">{{object.email}}</div>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-label">Mobile Number</div>
+            <div class="profile-value">{{object.phoneno}}</div>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-label">Country</div>
+            <div class="profile-value">{{object.country}}</div>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-label">State</div>
+            <div class="profile-value">{{object.state}}</div>
+        </div>
+
+        <div class="profile-item">
+            <div class="profile-label">City</div>
+            <div class="profile-value">{{object.city}}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

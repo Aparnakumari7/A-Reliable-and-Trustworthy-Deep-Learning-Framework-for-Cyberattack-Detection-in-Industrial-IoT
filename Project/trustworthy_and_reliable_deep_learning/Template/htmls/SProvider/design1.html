@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIoT Security - Service Provider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff8c;
+            --secondary-color: #1a1a1a;
+            --accent-color: #0066cc;
+            --text-color: #ffffff;
+            --danger-color: #ff3366;
+            --success-color: #00cc99;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 2s infinite;
+        }
+
+        .topnav {
+            background: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(0, 255, 140, 0.2);
+            border-bottom: 1px solid rgba(0, 255, 140, 0.2);
+            padding: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .topnav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: rgba(0, 255, 140, 0.1);
+            border: 1px solid rgba(0, 255, 140, 0.2);
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .topnav a:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 140, 0.2);
+        }
+
+        .topnav a.active {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .mainholder {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(0, 255, 140, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.4rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .topnav {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+
+            .topnav a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Trustworthy and Reliable Deep Learning Based Cyberattack Detection in Industrial IoT</h1>
+
+    <div class="topnav">
+        <a href="{% url 'train_model' %}">Train & Test Datasets</a>
+        <a href="{% url 'likeschart' 'bar' %}">View Accuracy Chart</a>
+        <a href="{% url 'charts1' 'line' %}">View Accuracy Results</a>
+        <a href="{% url 'View_Prediction_Of_Cyber_Attack_Type' %}">View Attack Predictions</a>
+        <a href="{% url 'View_Cyber_Attack_Type_Ratio' %}">Attack Type Ratio</a>
+        <a href="{% url 'Download_Predicted_DataSets' %}">Download Datasets</a>
+        <a href="{% url 'charts' 'line' %}">Attack Ratio Results</a>
+        <a href="{% url 'View_Remote_Users' %}">Remote Users</a>
+        <a href="{% url 'login' %}">Logout</a>
+    </div>
+
+    <div class="mainholder">
+        {% block researchblock %}
+        {% endblock %}
+    </div>
+</body>
+</html>

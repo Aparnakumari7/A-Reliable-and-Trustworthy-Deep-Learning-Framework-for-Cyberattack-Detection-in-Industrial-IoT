@@ -1,0 +1,346 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+<style>
+    :root {
+        --protocol-color: #00ff8c;
+        --ip-color: #00ccff;
+        --port-color: #ffcc00;
+        --prediction-color: #ff3366;
+        --id-color: #ff9933;
+        --packet-color: #cc99ff;
+        --fid-color: #66ff99;
+    }
+
+    .prediction-container {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .prediction-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .prediction-title {
+        font-family: 'Share Tech Mono', monospace;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid rgba(0, 255, 140, 0.1);
+    }
+
+    .prediction-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 4px;
+        font-family: 'Share Tech Mono', monospace;
+    }
+
+    .prediction-table th {
+        background: rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+        padding: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: normal;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .prediction-table td {
+        background: rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(0, 255, 140, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .prediction-table tr:hover td {
+        transform: translateY(-2px);
+    }
+
+    /* Protocol highlighting */
+    .protocol-header {
+        color: var(--protocol-color) !important;
+        background: rgba(0, 255, 140, 0.1) !important;
+    }
+
+    .protocol-value {
+        color: var(--protocol-color) !important;
+        background: rgba(0, 255, 140, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* IP highlighting */
+    .ip-header {
+        color: var(--ip-color) !important;
+        background: rgba(0, 204, 255, 0.1) !important;
+    }
+
+    .ip-value {
+        color: var(--ip-color) !important;
+        background: rgba(0, 204, 255, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Port highlighting */
+    .port-header {
+        color: var(--port-color) !important;
+        background: rgba(255, 204, 0, 0.1) !important;
+    }
+
+    .port-value {
+        color: var(--port-color) !important;
+        background: rgba(255, 204, 0, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* ID highlighting */
+    .id-header {
+        color: var(--id-color) !important;
+        background: rgba(255, 153, 51, 0.1) !important;
+    }
+
+    .id-value {
+        color: var(--id-color) !important;
+        background: rgba(255, 153, 51, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Packet highlighting */
+    .packet-header {
+        color: var(--packet-color) !important;
+        background: rgba(204, 153, 255, 0.1) !important;
+    }
+
+    .packet-value {
+        color: var(--packet-color) !important;
+        background: rgba(204, 153, 255, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* FID highlighting */
+    .fid-header {
+        color: var(--fid-color) !important;
+        background: rgba(102, 255, 153, 0.1) !important;
+    }
+
+    .fid-value {
+        color: var(--fid-color) !important;
+        background: rgba(102, 255, 153, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Prediction highlighting */
+    .prediction-header {
+        color: var(--prediction-color) !important;
+        background: rgba(255, 51, 102, 0.1) !important;
+    }
+
+    .prediction-value {
+        color: var(--prediction-color) !important;
+        background: rgba(255, 51, 102, 0.1) !important;
+        font-weight: 600;
+        font-size: 1rem;
+        text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+    }
+
+    .legend-prediction {
+        background: var(--prediction-color);
+    }
+
+    .legend-protocol {
+        background: var(--protocol-color);
+    }
+
+    .legend-ip {
+        background: var(--ip-color);
+    }
+
+    .legend-port {
+        background: var(--port-color);
+    }
+
+    .legend-id {
+        background: var(--id-color);
+    }
+
+    .legend-packet {
+        background: var(--packet-color);
+    }
+
+    .legend-fid {
+        background: var(--fid-color);
+    }
+
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+        50% { text-shadow: 0 0 20px rgba(0, 255, 140, 0.7); }
+        100% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+    }
+
+    @media (max-width: 768px) {
+        .prediction-container {
+            padding: 1rem;
+        }
+
+        .table-container {
+            padding: 0.5rem;
+        }
+
+        .prediction-table th,
+        .prediction-table td {
+            padding: 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .legend {
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+
+        .legend-item {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Custom scrollbar for webkit browsers */
+    .table-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 140, 0.8);
+    }
+</style>
+
+<div class="prediction-container">
+    <div class="prediction-header">
+        <h2 class="prediction-title">Cyber Attack Type Predictions</h2>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color legend-prediction"></div>
+            <span>Attack Prediction</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-protocol"></div>
+            <span>Protocol Info</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-ip"></div>
+            <span>IP Addresses</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-port"></div>
+            <span>Port Numbers</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-id"></div>
+            <span>ID Information</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-packet"></div>
+            <span>Packet Data</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-fid"></div>
+            <span>Flow ID</span>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="prediction-table">
+            <thead>
+                <tr>
+                    <th class="fid-header">Fid</th>
+                    <th class="protocol-header">Protocol</th>
+                    <th class="protocol-header">Flag</th>
+                    <th class="packet-header">Packet</th>
+                    <th class="id-header">Sender ID</th>
+                    <th class="id-header">Receiver ID</th>
+                    <th class="ip-header">Source IP</th>
+                    <th class="ip-header">Destination IP</th>
+                    <th class="port-header">Source Port</th>
+                    <th class="port-header">Dest Port</th>
+                    <th class="packet-header">Packet Size</th>
+                    <th class="prediction-header">Prediction</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in list_objects %}
+                <tr>
+                    <td class="fid-value">{{object.Fid}}</td>
+                    <td class="protocol-value">{{object.Protocol}}</td>
+                    <td class="protocol-value">{{object.Flag}}</td>
+                    <td class="packet-value">{{object.Packet}}</td>
+                    <td class="id-value">{{object.Sender_ID}}</td>
+                    <td class="id-value">{{object.Receiver_ID}}</td>
+                    <td class="ip-value">{{object.Source_IP_Address}}</td>
+                    <td class="ip-value">{{object.Destination_IP_Address}}</td>
+                    <td class="port-value">{{object.Source_Port}}</td>
+                    <td class="port-value">{{object.Destination_Port}}</td>
+                    <td class="packet-value">{{object.Packet_Size}}</td>
+                    <td class="prediction-value">{{object.Prediction}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,269 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+<style>
+    :root {
+        --username-color: #00ff8c;
+        --email-color: #00ccff;
+        --phone-color: #ffcc00;
+        --location-color: #ff9933;
+    }
+
+    .users-container {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .users-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .users-title {
+        font-family: 'Share Tech Mono', monospace;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid rgba(0, 255, 140, 0.1);
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 4px;
+        font-family: 'Share Tech Mono', monospace;
+    }
+
+    .users-table th {
+        background: rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+        padding: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: normal;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .users-table td {
+        background: rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(0, 255, 140, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .users-table tr:hover td {
+        transform: translateY(-2px);
+    }
+
+    /* Username highlighting */
+    .username-header {
+        color: var(--username-color) !important;
+        background: rgba(0, 255, 140, 0.1) !important;
+    }
+
+    .username-value {
+        color: var(--username-color) !important;
+        background: rgba(0, 255, 140, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Email highlighting */
+    .email-header {
+        color: var(--email-color) !important;
+        background: rgba(0, 204, 255, 0.1) !important;
+    }
+
+    .email-value {
+        color: var(--email-color) !important;
+        background: rgba(0, 204, 255, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Phone highlighting */
+    .phone-header {
+        color: var(--phone-color) !important;
+        background: rgba(255, 204, 0, 0.1) !important;
+    }
+
+    .phone-value {
+        color: var(--phone-color) !important;
+        background: rgba(255, 204, 0, 0.05) !important;
+        font-weight: 500;
+    }
+
+    /* Location highlighting */
+    .location-header {
+        color: var(--location-color) !important;
+        background: rgba(255, 153, 51, 0.1) !important;
+    }
+
+    .location-value {
+        color: var(--location-color) !important;
+        background: rgba(255, 153, 51, 0.05) !important;
+        font-weight: 500;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+    }
+
+    .legend-username {
+        background: var(--username-color);
+    }
+
+    .legend-email {
+        background: var(--email-color);
+    }
+
+    .legend-phone {
+        background: var(--phone-color);
+    }
+
+    .legend-location {
+        background: var(--location-color);
+    }
+
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+        50% { text-shadow: 0 0 20px rgba(0, 255, 140, 0.7); }
+        100% { text-shadow: 0 0 10px rgba(0, 255, 140, 0.5); }
+    }
+
+    @media (max-width: 768px) {
+        .users-container {
+            padding: 1rem;
+        }
+
+        .table-container {
+            padding: 0.5rem;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .legend {
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+
+        .legend-item {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Custom scrollbar for webkit browsers */
+    .table-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 140, 0.8);
+    }
+</style>
+
+<div class="users-container">
+    <div class="users-header">
+        <h2 class="users-title">Remote Users Overview</h2>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color legend-username"></div>
+            <span>Username</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-email"></div>
+            <span>Email</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-phone"></div>
+            <span>Phone Number</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-location"></div>
+            <span>Location Info</span>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th class="username-header">Username</th>
+                    <th class="email-header">Email</th>
+                    <th class="phone-header">Mobile No</th>
+                    <th class="location-header">Country</th>
+                    <th class="location-header">State</th>
+                    <th class="location-header">City</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in objects %}
+                <tr>
+                    <td class="username-value">{{o.username}}</td>
+                    <td class="email-value">{{o.email}}</td>
+                    <td class="phone-value">{{o.phoneno}}</td>
+                    <td class="location-value">{{o.country}}</td>
+                    <td class="location-value">{{o.state}}</td>
+                    <td class="location-value">{{o.city}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

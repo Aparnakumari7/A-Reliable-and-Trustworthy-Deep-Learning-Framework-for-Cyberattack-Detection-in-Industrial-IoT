@@ -1,0 +1,197 @@
+{% extends 'RUser/design.html' %}
+{% block userblock %}
+<style>
+    .prediction-container {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+    }
+
+    .prediction-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .prediction-title {
+        font-family: 'Share Tech Mono', monospace;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite;
+    }
+
+    .prediction-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        font-family: 'Share Tech Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.8rem;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 140, 0.2);
+        border-radius: 5px;
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 10px rgba(0, 255, 140, 0.2);
+    }
+
+    .submit-container {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .predict-btn {
+        background: var(--primary-color);
+        color: var(--secondary-color);
+        padding: 1rem 3rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .predict-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 140, 0.3);
+    }
+
+    .result-container {
+        margin-top: 2rem;
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+    }
+
+    .result-label {
+        color: var(--primary-color);
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .result-value {
+        color: var(--danger-color);
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: 'Share Tech Mono', monospace;
+        text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        .prediction-form {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="prediction-container">
+    <div class="prediction-header">
+        <h2 class="prediction-title">Predict Cyber Attack Type</h2>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="prediction-form">
+            <div class="form-group">
+                <label class="form-label">Fid</label>
+                <input type="text" name="Fid" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Protocol</label>
+                <input type="text" name="Protocol" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Flag</label>
+                <input type="text" name="Flag" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Packet</label>
+                <input type="text" name="Packet" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Sender ID</label>
+                <input type="text" name="Sender_ID" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Receiver ID</label>
+                <input type="text" name="Receiver_ID" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Source IP Address</label>
+                <input type="text" name="Source_IP_Address" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Destination IP Address</label>
+                <input type="text" name="Destination_IP_Address" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Source Port</label>
+                <input type="text" name="Source_Port" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Destination Port</label>
+                <input type="text" name="Destination_Port" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Packet Size</label>
+                <input type="text" name="Packet_Size" class="form-input" required>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" name="submit" class="predict-btn">Predict Attack</button>
+            </div>
+        </div>
+    </form>
+
+    {% if objs %}
+    <div class="result-container">
+        <div class="result-label">Predicted Attack Type</div>
+        <div class="result-value">{{objs}}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

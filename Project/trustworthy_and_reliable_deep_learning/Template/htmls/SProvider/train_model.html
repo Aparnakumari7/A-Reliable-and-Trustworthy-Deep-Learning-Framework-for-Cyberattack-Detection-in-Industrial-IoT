@@ -1,0 +1,103 @@
+{% extends 'SProvider/design1.html' %}
+{% block researchblock %}
+<style>
+    .model-container {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        padding: 2rem;
+        border: 1px solid rgba(0, 255, 140, 0.2);
+        margin-bottom: 2rem;
+    }
+
+    .model-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .model-title {
+        font-family: 'Share Tech Mono', monospace;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glow 2s infinite;
+    }
+
+    .model-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        margin-top: 1rem;
+    }
+
+    .model-table th,
+    .model-table td {
+        padding: 1rem;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+    }
+
+    .model-table th {
+        background: rgba(0, 255, 140, 0.1);
+        color: var(--primary-color);
+        font-family: 'Share Tech Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: normal;
+    }
+
+    .model-table td {
+        color: var(--text-color);
+        font-family: 'Share Tech Mono', monospace;
+        transition: all 0.3s ease;
+    }
+
+    .model-table tr:hover td {
+        background: rgba(0, 255, 140, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .accuracy-value {
+        color: var(--primary-color);
+        font-size: 1.1rem;
+        text-shadow: 0 0 10px rgba(0, 255, 140, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .model-container {
+            padding: 1rem;
+        }
+
+        .model-table th,
+        .model-table td {
+            padding: 0.8rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="model-container">
+    <div class="model-header">
+        <h2 class="model-title">Model Training Results</h2>
+    </div>
+
+    <table class="model-table">
+        <thead>
+            <tr>
+                <th>Model Type</th>
+                <th>Accuracy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in objs %}
+            <tr>
+                <td>{{object.names}}</td>
+                <td class="accuracy-value">{{object.ratio}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+Trustworthy and Reliable Deep Learning Based Cyberattack Detection in Industrial IoT
+
+IEEE Transactions on Industrial Informatics,Volume:19,Issue:1,Issue Date:January.2023
+
+
+Cybersecurity,data acquisition networks,deep learning, Industrial Internet of Things (IIoT), supervisory control, trustworthiness.
+
+
+
+Trustworthy_and_Reliable_Deep_Learning
+
+
+trustworthy_and_reliable_deep_learning
+
+
+0-Cross Site Scripting
+1-DoS
+2-Password Attacks
+
+
+cyberattack_detection
+
+
+
+Fid	
+Protocol	
+Flag	
+Packet	
+Sender_ID	
+Receiver_ID	
+Source_IP_Address	
+Destination_IP_Address	
+Source_Port	
+Destination_Port	
+Packet_Size
+Prediction
+
+
+
+
+
